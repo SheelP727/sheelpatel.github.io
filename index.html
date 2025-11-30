@@ -46,8 +46,8 @@
     .progress-bar {
       height: 100%;
       width: 0;
-      background: linear-gradient(90deg, #38bdf8, #22c55e);
       transform-origin: left center;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
     }
 
     /* Top nav */
@@ -183,7 +183,8 @@
       font-size: 13px;
     }
 
-    .sidebar-links a {
+    .sidebar-links a,
+    .sidebar-links button {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -194,11 +195,18 @@
       border: 1px solid #1f2937;
       color: #e5e7eb;
       border-bottom-color: transparent;
+      cursor: pointer;
+      font-size: 13px;
     }
 
-    .sidebar-links a:hover {
+    .sidebar-links a:hover,
+    .sidebar-links button:hover {
       background: rgba(15, 23, 42, 1);
       border-color: #334155;
+    }
+
+    .sidebar-links button {
+      font-family: inherit;
     }
 
     .sidebar-section-title {
@@ -295,7 +303,7 @@
       margin-bottom: 6px;
     }
 
-    /* Airtable-like courses table */
+    /* Airtable-like courses table (for modal) */
     .courses-wrapper {
       margin-top: 10px;
       background: rgba(15, 23, 42, 0.95);
@@ -307,7 +315,7 @@
 
     .courses-table {
       width: 100%;
-      min-width: 560px;
+      min-width: 620px;
       border-collapse: collapse;
       font-size: 13px;
     }
@@ -348,6 +356,74 @@
       color: #a5f3fc;
     }
 
+    /* Modal for courses */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 60;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 16px;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.15), #020617);
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9);
+      padding: 18px 18px 20px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #f9fafb;
+    }
+
+    .modal-close {
+      border: 1px solid #475569;
+      border-radius: 999px;
+      background: transparent;
+      color: #e5e7eb;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .modal-close:hover {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .modal-subtext {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
     /* Back to top button */
     .back-to-top {
       position: fixed;
@@ -364,7 +440,6 @@
       pointer-events: none;
       transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-      z-index: 60;
     }
 
     .back-to-top.visible {
@@ -387,140 +462,6 @@
       color: #9ca3af;
       text-align: right;
     }
-
-    /* ==== UNIQUE FEATURE: COMMAND PALETTE ==== */
-    .command-button {
-      position: fixed;
-      left: 18px;
-      bottom: 18px;
-      padding: 6px 10px;
-      font-size: 11px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      background: rgba(15, 23, 42, 0.96);
-      color: #e5e7eb;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-      z-index: 60;
-    }
-
-    .command-button kbd {
-      font-size: 10px;
-      padding: 2px 5px;
-      border-radius: 4px;
-      border: 1px solid #4b5563;
-      background: rgba(15, 23, 42, 0.9);
-      color: #9ca3af;
-    }
-
-    .command-palette-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 80px;
-      z-index: 70;
-    }
-
-    .command-palette-overlay.active {
-      display: flex;
-    }
-
-    .command-palette {
-      width: 100%;
-      max-width: 520px;
-      background: #020617;
-      border-radius: 14px;
-      border: 1px solid #1f2937;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
-      overflow: hidden;
-    }
-
-    .command-palette-header {
-      padding: 10px 14px;
-      border-bottom: 1px solid #111827;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .command-input {
-      flex: 1;
-      padding: 7px 9px;
-      border-radius: 8px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 13px;
-    }
-
-    .command-input::placeholder {
-      color: #6b7280;
-    }
-
-    .command-list {
-      max-height: 260px;
-      overflow-y: auto;
-      padding: 4px 0;
-    }
-
-    .command-item {
-      padding: 8px 14px;
-      font-size: 13px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      cursor: pointer;
-    }
-
-    .command-item span {
-      font-weight: 500;
-      color: #e5e7eb;
-    }
-
-    .command-item small {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .command-item:hover,
-    .command-item.active {
-      background: rgba(37, 99, 235, 0.35);
-    }
-
-    .command-footer {
-      padding: 6px 14px 8px;
-      border-top: 1px solid #111827;
-      font-size: 11px;
-      color: #6b7280;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .command-footer kbd {
-      padding: 2px 4px;
-      border-radius: 4px;
-      border: 1px solid #4b5563;
-      background: #020617;
-      color: #9ca3af;
-      font-size: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .command-palette {
-        margin: 0 12px;
-      }
-
-      .command-button {
-        display: none; /* keep the keyboard shortcut on mobile */
-      }
-    }
   </style>
 </head>
 <body>
@@ -535,7 +476,6 @@
       <div class="top-nav-title">Sheel Patel · Strategy · MedTech · Clinical Research</div>
       <nav class="top-nav-links">
         <a href="#about">About</a>
-        <a href="#courses">Courses</a>
         <a href="#research">Research</a>
         <a href="#work">Work</a>
         <a href="#talks">Talks</a>
@@ -550,8 +490,7 @@
     <aside class="sidebar">
       <div class="avatar-shell">
         <div class="avatar">
-          <!-- Uses the raw file URL so it always loads -->
-          <img src="https://raw.githubusercontent.com/SheelP727/sheelp727.github.io/main/profile.jpg"
+          <img src="https://raw.githubusercontent.com/SheelP727/sheelpatel.github.io/main/profile.jpg"
                alt="Portrait of Sheel Patel" />
         </div>
       </div>
@@ -567,9 +506,10 @@
         Nutrition Science · Chemistry minor
       </div>
 
+      <!-- LinkedIn + Courses button -->
       <div class="sidebar-links">
         <a href="https://www.linkedin.com/in/sheelpatelnc" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="#courses">Courses</a>
+        <button type="button" id="openCourses">Courses</button>
       </div>
 
       <div class="sidebar-section-title">Focus areas</div>
@@ -609,205 +549,6 @@
           questions of adoption, market entry, and system design. Long term, I hope to train as a physician while
           shaping the infrastructure that makes high-quality care sustainable and accessible.
         </p>
-      </section>
-
-      <!-- COURSES -->
-      <section id="courses" class="section">
-        <h2>Undergraduate Courses</h2>
-        <p class="intro">
-          A snapshot of my completed, in-progress, and transfer undergraduate coursework at Penn, formatted in an
-          Airtable-style grid.
-        </p>
-        <div class="courses-wrapper">
-          <table class="courses-table">
-            <thead>
-              <tr>
-                <th>Course ID</th>
-                <th>Course Name</th>
-                <th>Status</th>
-                <th>Credits</th>
-                <th>Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>WRIT 0130</td>
-              <td>Critical Writing Seminar in</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>STSC 1151</td>
-              <td>Modern Biology and Social</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>MATH 1400</td>
-              <td>Calculus I</td>
-              <td><span class="pill pill-status">Transfer</span></td>
-              <td>1.00</td>
-              <td>TR</td>
-            </tr>
-            <tr>
-              <td>MKTG 2250</td>
-              <td>Principles of Retailing</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>0.50</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>CHEM 2410</td>
-              <td>Principles of Organic</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>CHEM 1011</td>
-              <td>Introduction to General</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A-</td>
-            </tr>
-            <tr>
-              <td>CHEM 2451</td>
-              <td>Experimental Organic</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>0.50</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>CHEM 1101</td>
-              <td>General Chemistry Laboratory I</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>0.50</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>HCMG 1010</td>
-              <td>Health Care Systems</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>INTG 0001</td>
-              <td>Integrated Studies I: The</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>2.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>HIST 0811</td>
-              <td>Faculty-Student Collaborative</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>SPAN 0400</td>
-              <td>Intermediate Spanish II</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>HSOC 0400</td>
-              <td>Medicine in History</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>MUSC 1700</td>
-              <td>Introduction to Theory and</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>CHEM 1022</td>
-              <td>General Chemistry II</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A-</td>
-            </tr>
-            <tr>
-              <td>CHEM 1102</td>
-              <td>General Chemistry Laboratory</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>0.50</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>HSOC 0480</td>
-              <td>Health and Societies</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>1.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>CHEM 2420</td>
-              <td>Principles of Organic</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>INTG 0002</td>
-              <td>Integrated Studies II:</td>
-              <td><span class="pill pill-status">Completed</span></td>
-              <td>2.00</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>CHEM 2452</td>
-              <td>Experimental Organic</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>0.50</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>HSOC 0600</td>
-              <td>Technology &amp; Society</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>HSOC 1222</td>
-              <td>Medical Sociology</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>HSOC 2002</td>
-              <td>Sociological Research Methods</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>NURS 1120</td>
-              <td>Nutrition: Sci &amp; Applica</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            <tr>
-              <td>STAT 1110</td>
-              <td>Introductory Statistics</td>
-              <td><span class="pill pill-status">In Progress</span></td>
-              <td>1.00</td>
-              <td>IN PROGRESS</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
       <!-- RESEARCH EXPERIENCE -->
@@ -890,3 +631,289 @@
           <li><strong>Coca-Cola Scholars Regional Finalist</strong> – selected as a regional finalist for the Coca-Cola Scholars program.</li>
           <li><strong>National Beta Service Scholarship Recipient</strong> – awarded for sustained service and leadership in National Beta Club.</li>
           <li><strong>ClimateScience Olympiad – 2× semifinalist</strong> – advanced in a global climate problem-solving competition.</li>
+          <li><strong>National Merit Commended Scholar</strong> – one of 34,000 students recognized nationwide.</li>
+          <li><strong>Top 150 internationally</strong> – Wharton Global High School Investment Competition.</li>
+          <li><strong>Gold Presidential Volunteer Service Award</strong> – recognized for more than 250 hours of service.</li>
+          <li><strong>15× Science Olympiad medalist</strong> – 5 state medals and 10 regional / invitational medals in North Carolina Science Olympiad.</li>
+          <li><strong>2nd Place, Bain x GRC Case Competition</strong> – team placed second out of more than 60 teams and 300 participants.</li>
+        </ul>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>
+          I am interested in collaborations at the intersection of strategy, medtech, and clinical research, especially
+          projects focused on kidney disease, adolescent health, or sustainability in healthcare.
+        </p>
+        <ul>
+          <li>Email – <a href="mailto:sheelp@sas.upenn.edu">sheelp@sas.upenn.edu</a></li>
+          <li>LinkedIn – <a href="https://www.linkedin.com/in/sheelpatelnc" target="_blank" rel="noreferrer">linkedin.com/in/sheelpatelnc</a></li>
+        </ul>
+      </section>
+
+      <div class="footer">
+        © 2025 Sheel Patel. All rights reserved.
+      </div>
+    </main>
+  </div>
+
+  <!-- COURSES MODAL (opens from sidebar button) -->
+  <div class="modal-overlay" id="coursesModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="coursesTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="coursesTitle">Undergraduate Courses</div>
+        <button class="modal-close" id="closeCourses" aria-label="Close courses dialog">×</button>
+      </div>
+      <p class="modal-subtext">
+        A snapshot of completed, in-progress, and transfer coursework at Penn, shown in an Airtable-style grid.
+      </p>
+      <div class="courses-wrapper">
+        <table class="courses-table">
+          <thead>
+            <tr>
+              <th>Course ID</th>
+              <th>Course Name</th>
+              <th>Status</th>
+              <th>Credits</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>WRIT 0130</td>
+              <td>Critical Writing Seminar in ANTH: Global Health</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>STSC 1151</td>
+              <td>Modern Biology and Social Implications</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>MATH 1400</td>
+              <td>Calculus I</td>
+              <td><span class="pill pill-status">Transfer</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>MKTG 2250</td>
+              <td>Principles of Retailing</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td>CHEM 1011</td>
+              <td>Introduction to General Chemistry I</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 1101</td>
+              <td>General Chemistry Laboratory I</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td>INTG 0001</td>
+              <td>Integrated Studies I</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td>SPAN 0400</td>
+              <td>Intermediate Spanish II</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 1022</td>
+              <td>General Chemistry II</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 1102</td>
+              <td>General Chemistry Laboratory II</td>
+              <td><span class="pill pill-status">Completed</span></td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td>HSOC 0480</td>
+              <td>Health and Societies</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>INTG 0002</td>
+              <td>Integrated Studies II: History of the Environment</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 2410</td>
+              <td>Principles of Organic Chemistry I</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 2451</td>
+              <td>Experimental Organic Chemistry I</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td>HCMG 1010</td>
+              <td>Health Care Systems</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>HIST 0811</td>
+              <td>Faculty-Student Collaborative Action Seminar in Urban University-Community Relations</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>MUSC 1700</td>
+              <td>Introduction to Theory and Musicianship</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 2420</td>
+              <td>Principles of Organic Chemistry II</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>CHEM 2452</td>
+              <td>Experimental Organic Chemistry II</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td>HSOC 0400</td>
+              <td>Medicine in History</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>HSOC 0600</td>
+              <td>Technology &amp; Society</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>HSOC 1222</td>
+              <td>Medical Sociology</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>HSOC 2002</td>
+              <td>Sociological Research Methods</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>NURS 1120</td>
+              <td>Nutrition: Science &amp; Applications</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td>STAT 1110</td>
+              <td>Introductory Statistics</td>
+              <td><span class="pill pill-status">In Progress</span></td>
+              <td>1.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="back-to-top hidden" type="button">Back to top</button>
+
+  <script>
+    // Scroll progress bar (with color-changing gradient) + back-to-top visibility
+    (function () {
+      const progressBar = document.getElementById("progressBar");
+      const backToTop = document.getElementById("backToTop");
+
+      function updateProgress() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = scrollPercent + "%";
+
+        // Color-changing bar: hue shifts as you scroll down the page
+        const hue = scrollPercent * 3.6; // 0–100% mapped to 0–360°
+        const nextHue = (hue + 60) % 360;
+        progressBar.style.background = `linear-gradient(90deg, hsl(${hue}, 90%, 60%), hsl(${nextHue}, 90%, 60%))`;
+
+        if (scrollTop > 350) {
+          backToTop.classList.add("visible");
+          backToTop.classList.remove("hidden");
+        } else {
+          backToTop.classList.remove("visible");
+          backToTop.classList.add("hidden");
+        }
+      }
+
+      window.addEventListener("scroll", updateProgress);
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+
+      backToTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+
+    // Courses modal open/close logic
+    (function () {
+      const openBtn = document.getElementById("openCourses");
+      const modal = document.getElementById("coursesModal");
+      const closeBtn = document.getElementById("closeCourses");
+
+      if (!openBtn || !modal || !closeBtn) return;
+
+      function openModal() {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      openBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openModal();
+      });
+
+      closeBtn.addEventListener("click", function () {
+        closeModal();
+      });
+
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
